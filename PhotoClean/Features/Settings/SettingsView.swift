@@ -47,7 +47,7 @@ struct SettingsView: View {
                 } header: {
                     Text("About")
                 } footer: {
-                    Text("Runs 100% offline. Nothing is sent to any server.\n\nOpen source — clone from GitHub to install on your own device.")
+                    Text("Runs 100% offline. Nothing is sent to any server.")
                 }
             }
             .navigationTitle("Settings")
@@ -150,13 +150,11 @@ struct SettingsView: View {
             }
             .buttonStyle(.glassProminent)
             .tint(.accentColor)
-            .shadow(color: Color.accentColor.opacity(0.3), radius: 12, y: 5)
         } else {
             Button { showingPaywall = true } label: {
                 unlockLabel(priceText: priceText)
                     .foregroundStyle(.white)
                     .background(glossyCapsule)
-                    .shadow(color: Color.accentColor.opacity(0.4), radius: 14, y: 6)
             }
             .buttonStyle(.plain)
         }

@@ -2026,6 +2026,34 @@
           }
         }
       }
+    },
+    "Runs 100% offline. Nothing is sent to any server.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Funciona 100 % sin conexión. No se envía nada a ningún servidor."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "100 % オフラインで動作します。サーバーには何も送信されません。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完全离线运作,不会传送任何资料到任何服务器。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完全離線運作,不會傳送任何資料到任何伺服器。"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

@@ -14,22 +14,20 @@ struct PaywallView: View {
     }
 
     var body: some View {
-        ZStack(alignment: .topTrailing) {
-            Color(.systemBackground).ignoresSafeArea()
-
-            ScrollView {
-                VStack(spacing: 28) {
-                    Spacer(minLength: 48)
-                    header
-                    benefits
-                    Spacer(minLength: 16)
-                    actions
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal, 24)
-                .padding(.bottom, 32)
+        ScrollView {
+            VStack(spacing: 28) {
+                Spacer(minLength: 48)
+                header
+                benefits
+                Spacer(minLength: 16)
+                actions
             }
-
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 24)
+            .padding(.bottom, 32)
+        }
+        .background(Color(.systemBackground).ignoresSafeArea())
+        .overlay(alignment: .topTrailing) {
             closeButton
         }
         .task {
@@ -144,13 +142,11 @@ struct PaywallView: View {
             .buttonStyle(.glassProminent)
             .tint(.accentColor)
             .disabled(store.isPurchasing || store.product == nil)
-            .shadow(color: Color.accentColor.opacity(0.35), radius: 18, y: 8)
         } else {
             Button { Task { await store.purchase() } } label: {
                 purchaseLabel(priceText: priceText)
                     .foregroundStyle(.white)
                     .background(glossyCapsule)
-                    .shadow(color: Color.accentColor.opacity(0.45), radius: 18, y: 8)
             }
             .buttonStyle(.plain)
             .disabled(store.isPurchasing || store.product == nil)
@@ -194,6 +190,7 @@ struct PaywallView: View {
                 .foregroundStyle(.primary)
                 .frame(width: 36, height: 36)
                 .liquidGlass(interactive: true, in: Circle())
+                .contentShape(Circle())
         }
         .buttonStyle(.plain)
         .padding(.top, 16)
