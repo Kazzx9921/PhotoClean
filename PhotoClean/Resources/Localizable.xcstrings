@@ -68,13 +68,13 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "将移动 %lld 张照片至 iOS「最近删除」,约释放 %@。"
+            "value": "将移动 %lld 张照片至 iOS「最近删除」，约释放 %@。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "將移動 %lld 張照片至 iOS「最近刪除」,約釋放 %@。"
+            "value": "將移動 %lld 張照片至 iOS「最近刪除」，約釋放 %@。"
           }
         }
       }
@@ -988,13 +988,13 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "一次买断,永不订阅"
+            "value": "一次买断，永不订阅"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "一次買斷,永不訂閱"
+            "value": "一次買斷，永不訂閱"
           }
         }
       }
@@ -1443,13 +1443,13 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "完全离线运作,不会传送任何资料到任何服务器。"
+            "value": "完全离线运作，不会传送任何资料到任何服务器。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "完全離線運作,不會傳送任何資料到任何伺服器。"
+            "value": "完全離線運作，不會傳送任何資料到任何伺服器。"
           }
         }
       }
@@ -1472,13 +1472,13 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "完全离线运行,不会连接任何服务器。\n\n开源项目 — 从 GitHub clone 下来即可自行安装到设备。"
+            "value": "完全离线运行，不会连接任何服务器。\n\n开源项目 — 从 GitHub clone 下来即可自行安装到设备。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "完全離線運作,不會連接任何伺服器。\n\n開源專案 — 從 GitHub clone 下來即可自行安裝到裝置。"
+            "value": "完全離線運作，不會連接任何伺服器。\n\n開源專案 — 從 GitHub clone 下來即可自行安裝到裝置。"
           }
         }
       }
@@ -1587,13 +1587,13 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "左滑照片把它们丢掉,会出现在这里。"
+            "value": "左滑照片把它们丢掉，会出现在这里。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "左滑照片把它們丟掉,會出現在這裡。"
+            "value": "左滑照片把它們丟掉，會出現在這裡。"
           }
         }
       }
@@ -1616,13 +1616,13 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "左滑丢掉,\n右滑保留"
+            "value": "左滑丢掉，\n右滑保留"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "左滑丟掉,\n右滑保留"
+            "value": "左滑丟掉，\n右滑保留"
           }
         }
       }
@@ -1645,13 +1645,13 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "若已在此 Apple ID 购买过或兑换过优惠码,点击「还原」即可。"
+            "value": "若已在此 Apple ID 购买过或兑换过优惠码，点击「还原」即可。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "若已在此 Apple ID 購買過或兌換過優惠碼,點「還原」即可。"
+            "value": "若已在此 Apple ID 購買過或兌換過優惠碼，點「還原」即可。"
           }
         }
       }
@@ -2017,13 +2017,13 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "你的照片完全不会离开这台设备,也不会上传任何服务器。\n\n如启用了 iCloud 照片,删除会同步到你的其他 Apple 设备。"
+            "value": "你的照片完全不会离开这台设备，也不会上传任何服务器。\n\n如启用了 iCloud 照片，删除会同步到你的其他 Apple 设备。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "你的照片完全不會離開這支裝置,也不會上傳任何伺服器。\n\n如果啟用了 iCloud 照片,刪除會同步到你的其他 Apple 裝置。"
+            "value": "你的照片完全不會離開這支裝置，也不會上傳任何伺服器。\n\n如果啟用了 iCloud 照片，刪除會同步到你的其他 Apple 裝置。"
           }
         }
       }
