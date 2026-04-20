@@ -480,6 +480,54 @@
         "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "你的照片完全不会离开这台设备,也不会上传任何服务器。\n\n如启用了 iCloud 照片,删除会同步到你的其他 Apple 设备。" } },
         "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "你的照片完全不會離開這支裝置,也不會上傳任何伺服器。\n\n如果啟用了 iCloud 照片,刪除會同步到你的其他 Apple 裝置。" } }
       }
+    },
+    "Delete %lld photos only (free)" : {
+      "localizations" : {
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Borrar solo %lld fotos (gratis)" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "%lld 枚だけ削除(無料)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "只删除 %lld 张(免费)" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "只刪除 %lld 張(免費)" } }
+      }
+    },
+    "PhotoClean Pro" : {
+      "localizations" : {
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "PhotoClean Pro" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "PhotoClean Pro" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "PhotoClean Pro" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "PhotoClean Pro" } }
+      }
+    },
+    "Unlimited cleanups unlocked. Thank you for supporting the project!" : {
+      "localizations" : {
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Limpieza ilimitada desbloqueada. ¡Gracias por apoyar el proyecto!" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "無制限のクリーンアップが解除されました。プロジェクトへのサポートに感謝します!" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已解锁无限清理。感谢你支持这个项目!" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "已解鎖無限清理。感謝你支持這個專案!" } }
+      }
+    },
+    "Free Plan" : {
+      "localizations" : {
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Plan gratuito" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "無料プラン" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "免费版" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "免費版" } }
+      }
+    },
+    "Unlock Unlimited — %@" : {
+      "localizations" : {
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Desbloquear ilimitado — %@" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "無制限に解除 — %@" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "解锁无限使用 — %@" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "解鎖無限使用 — %@" } }
+      }
+    },
+    "Already purchased? Restore" : {
+      "localizations" : {
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "¿Ya lo compraste? Restaurar" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "購入済み?復元する" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已购买过?点此还原" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "已購買過?點此還原" } }
+      }
     }
   },
   "version" : "1.0"
