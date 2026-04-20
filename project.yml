@@ -33,6 +33,7 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_NSPhotoLibraryUsageDescription: "PhotoClean needs access to your library to help you clean up photos. Nothing leaves your device."
         INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription: "PhotoClean needs photo library access."
+        INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
         INFOPLIST_KEY_CFBundleDisplayName: "PhotoClean"
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES

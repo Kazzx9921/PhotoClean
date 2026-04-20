@@ -33,6 +33,11 @@ final class PaywallStore {
                 await self?.handle(result)
             }
         }
+        Task { [weak self] in
+            for await result in Transaction.currentEntitlements {
+                await self?.handle(result)
+            }
+        }
     }
 
     deinit { updatesTaskBox.task?.cancel() }
