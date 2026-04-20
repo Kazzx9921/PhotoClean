@@ -156,31 +156,32 @@ struct SettingsView: View {
             Button { showingPaywall = true } label: {
                 unlockLabel(priceText: priceText)
                     .foregroundStyle(.white)
-                    .background(
-                        LinearGradient(
-                            colors: [
-                                Color.accentColor,
-                                Color.accentColor.opacity(0.85)
-                            ],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        ),
-                        in: Capsule()
-                    )
-                    .shadow(color: Color.accentColor.opacity(0.35), radius: 14, y: 6)
+                    .background(glossyCapsule)
+                    .shadow(color: Color.accentColor.opacity(0.4), radius: 16, y: 8)
             }
             .buttonStyle(.plain)
         }
     }
 
-    private func unlockLabel(priceText: String) -> some View {
-        HStack(spacing: 8) {
-            Image(systemName: "lock.open.fill")
-                .font(.callout.weight(.bold))
-            Text("Unlock Unlimited — \(priceText)")
-                .font(.callout.weight(.bold))
+    private var glossyCapsule: some View {
+        ZStack {
+            Capsule().fill(Color.accentColor)
+            Capsule().fill(
+                LinearGradient(
+                    colors: [Color.white.opacity(0.28), .clear],
+                    startPoint: .top,
+                    endPoint: .center
+                )
+            )
+            Capsule()
+                .strokeBorder(Color.white.opacity(0.18), lineWidth: 0.5)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 12)
+    }
+
+    private func unlockLabel(priceText: String) -> some View {
+        Text("Unlock Unlimited — \(priceText)")
+            .font(.callout.weight(.bold))
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 14)
     }
 }

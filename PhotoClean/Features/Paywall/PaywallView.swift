@@ -150,21 +150,26 @@ struct PaywallView: View {
             Button { Task { await store.purchase() } } label: {
                 purchaseLabel(priceText: priceText)
                     .foregroundStyle(.white)
-                    .background(
-                        LinearGradient(
-                            colors: [
-                                Color.accentColor,
-                                Color.accentColor.opacity(0.85)
-                            ],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        ),
-                        in: Capsule()
-                    )
-                    .shadow(color: Color.accentColor.opacity(0.4), radius: 18, y: 10)
+                    .background(glossyCapsule)
+                    .shadow(color: Color.accentColor.opacity(0.45), radius: 20, y: 10)
             }
             .buttonStyle(.plain)
             .disabled(store.isPurchasing || store.product == nil)
+        }
+    }
+
+    private var glossyCapsule: some View {
+        ZStack {
+            Capsule().fill(Color.accentColor)
+            Capsule().fill(
+                LinearGradient(
+                    colors: [Color.white.opacity(0.28), .clear],
+                    startPoint: .top,
+                    endPoint: .center
+                )
+            )
+            Capsule()
+                .strokeBorder(Color.white.opacity(0.18), lineWidth: 0.5)
         }
     }
 
@@ -173,8 +178,6 @@ struct PaywallView: View {
             if store.isPurchasing {
                 ProgressView().tint(.white)
             } else {
-                Image(systemName: "lock.open.fill")
-                    .font(.body.weight(.bold))
                 Text("Unlock for \(priceText)")
                     .font(.body.weight(.bold))
             }
