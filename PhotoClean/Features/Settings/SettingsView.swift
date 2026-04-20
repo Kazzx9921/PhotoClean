@@ -150,14 +150,13 @@ struct SettingsView: View {
             }
             .buttonStyle(.glassProminent)
             .tint(.accentColor)
-            .controlSize(.large)
-            .shadow(color: Color.accentColor.opacity(0.3), radius: 14, y: 6)
+            .shadow(color: Color.accentColor.opacity(0.3), radius: 12, y: 5)
         } else {
             Button { showingPaywall = true } label: {
                 unlockLabel(priceText: priceText)
                     .foregroundStyle(.white)
                     .background(glossyCapsule)
-                    .shadow(color: Color.accentColor.opacity(0.4), radius: 16, y: 8)
+                    .shadow(color: Color.accentColor.opacity(0.4), radius: 14, y: 6)
             }
             .buttonStyle(.plain)
         }
@@ -180,8 +179,8 @@ struct SettingsView: View {
 
     private func unlockLabel(priceText: String) -> some View {
         Text("Unlock Unlimited — \(priceText)")
-            .font(.callout.weight(.bold))
+            .font(.callout.weight(.semibold))
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 14)
+            .padding(.vertical, 9)
     }
 }

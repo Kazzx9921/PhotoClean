@@ -143,15 +143,14 @@ struct PaywallView: View {
             }
             .buttonStyle(.glassProminent)
             .tint(.accentColor)
-            .controlSize(.large)
             .disabled(store.isPurchasing || store.product == nil)
-            .shadow(color: Color.accentColor.opacity(0.35), radius: 20, y: 10)
+            .shadow(color: Color.accentColor.opacity(0.35), radius: 18, y: 8)
         } else {
             Button { Task { await store.purchase() } } label: {
                 purchaseLabel(priceText: priceText)
                     .foregroundStyle(.white)
                     .background(glossyCapsule)
-                    .shadow(color: Color.accentColor.opacity(0.45), radius: 20, y: 10)
+                    .shadow(color: Color.accentColor.opacity(0.45), radius: 18, y: 8)
             }
             .buttonStyle(.plain)
             .disabled(store.isPurchasing || store.product == nil)
@@ -179,11 +178,11 @@ struct PaywallView: View {
                 ProgressView().tint(.white)
             } else {
                 Text("Unlock for \(priceText)")
-                    .font(.body.weight(.bold))
+                    .font(.body.weight(.semibold))
             }
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 16)
+        .padding(.vertical, 11)
     }
 
     // MARK: - Close
