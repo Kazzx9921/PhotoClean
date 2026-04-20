@@ -1,0 +1,68 @@
+{
+  "identifier" : "B8E5F91A-1F4C-4B2E-9C8D-7A3F2E1A5B6D",
+  "nonRenewingSubscriptions" : [],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : true,
+      "internalID" : "PC001",
+      "localizations" : [
+        {
+          "description" : "Unlock unlimited photo and video cleanup, forever.",
+          "displayName" : "Lifetime Unlock",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "解鎖終身無限清理照片與影片。",
+          "displayName" : "終身解鎖",
+          "locale" : "zh_Hant"
+        },
+        {
+          "description" : "解锁终身无限清理照片与视频。",
+          "displayName" : "终身解锁",
+          "locale" : "zh_Hans"
+        },
+        {
+          "description" : "写真と動画の無制限整理を永久にアンロック。",
+          "displayName" : "生涯アンロック",
+          "locale" : "ja_JP"
+        },
+        {
+          "description" : "Desbloquea limpieza ilimitada de fotos y vídeos, para siempre.",
+          "displayName" : "Desbloqueo de por vida",
+          "locale" : "es_ES"
+        }
+      ],
+      "productID" : "com.geekaz.PhotoClean.unlock",
+      "referenceName" : "Lifetime Unlock",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "",
+    "_compatibilityTimeRate" : 1,
+    "_developerTeamID" : "",
+    "_disableDialogs" : false,
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 0,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      }
+    ]
+  },
+  "subscriptionGroups" : [],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}
