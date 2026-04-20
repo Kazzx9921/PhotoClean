@@ -146,23 +146,41 @@ struct SettingsView: View {
 
         if #available(iOS 26.0, *) {
             Button { showingPaywall = true } label: {
-                Text("Unlock Unlimited — \(priceText)")
-                    .font(.callout.weight(.semibold))
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 10)
+                unlockLabel(priceText: priceText)
             }
             .buttonStyle(.glassProminent)
             .tint(.accentColor)
+            .controlSize(.large)
+            .shadow(color: Color.accentColor.opacity(0.3), radius: 14, y: 6)
         } else {
             Button { showingPaywall = true } label: {
-                Text("Unlock Unlimited — \(priceText)")
-                    .font(.callout.weight(.semibold))
+                unlockLabel(priceText: priceText)
                     .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 10)
-                    .background(Color.accentColor, in: Capsule())
+                    .background(
+                        LinearGradient(
+                            colors: [
+                                Color.accentColor,
+                                Color.accentColor.opacity(0.85)
+                            ],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        ),
+                        in: Capsule()
+                    )
+                    .shadow(color: Color.accentColor.opacity(0.35), radius: 14, y: 6)
             }
             .buttonStyle(.plain)
         }
+    }
+
+    private func unlockLabel(priceText: String) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: "lock.open.fill")
+                .font(.callout.weight(.bold))
+            Text("Unlock Unlimited — \(priceText)")
+                .font(.callout.weight(.bold))
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 12)
     }
 }

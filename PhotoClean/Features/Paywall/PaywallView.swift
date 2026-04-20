@@ -143,12 +143,25 @@ struct PaywallView: View {
             }
             .buttonStyle(.glassProminent)
             .tint(.accentColor)
+            .controlSize(.large)
             .disabled(store.isPurchasing || store.product == nil)
+            .shadow(color: Color.accentColor.opacity(0.35), radius: 20, y: 10)
         } else {
             Button { Task { await store.purchase() } } label: {
                 purchaseLabel(priceText: priceText)
                     .foregroundStyle(.white)
-                    .background(Color.accentColor, in: Capsule())
+                    .background(
+                        LinearGradient(
+                            colors: [
+                                Color.accentColor,
+                                Color.accentColor.opacity(0.85)
+                            ],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        ),
+                        in: Capsule()
+                    )
+                    .shadow(color: Color.accentColor.opacity(0.4), radius: 18, y: 10)
             }
             .buttonStyle(.plain)
             .disabled(store.isPurchasing || store.product == nil)
@@ -156,16 +169,18 @@ struct PaywallView: View {
     }
 
     private func purchaseLabel(priceText: String) -> some View {
-        HStack {
+        HStack(spacing: 8) {
             if store.isPurchasing {
                 ProgressView().tint(.white)
             } else {
+                Image(systemName: "lock.open.fill")
+                    .font(.body.weight(.bold))
                 Text("Unlock for \(priceText)")
-                    .font(.body.weight(.semibold))
+                    .font(.body.weight(.bold))
             }
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 14)
+        .padding(.vertical, 16)
     }
 
     // MARK: - Close
