@@ -253,38 +253,6 @@
         }
       }
     },
-    "Copy" : {
-      "localizations" : {
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Copiar" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "コピー" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "复制" } },
-        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "複製" } }
-      }
-    },
-    "Copied" : {
-      "localizations" : {
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Copiado" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "コピー済み" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已复制" } },
-        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "已複製" } }
-      }
-    },
-    "Share" : {
-      "localizations" : {
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Compartir" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "共有" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "分享" } },
-        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "分享" } }
-      }
-    },
-    "Photo" : {
-      "localizations" : {
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Foto" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "写真" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "照片" } },
-        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "照片" } }
-      }
-    },
     "Cancel" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -397,6 +365,64 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "關閉"
+          }
+        }
+      }
+    },
+    "Copied" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiado"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コピー済み"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已复制"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已複製"
+          }
+        }
+      }
+    },
+    "Copy" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiar"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コピー"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "複製"
           }
         }
       }
@@ -1148,6 +1174,35 @@
         }
       }
     },
+    "Photo" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Foto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写真"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "照片"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "照片"
+          }
+        }
+      }
+    },
     "Photo library access" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1456,6 +1511,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "設定"
+          }
+        }
+      }
+    },
+    "Share" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compartir"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "共有"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分享"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分享"
           }
         }
       }

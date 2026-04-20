@@ -192,8 +192,10 @@ struct PhotoCardView: View {
             }
             .font(.callout)
             .foregroundStyle(.white)
-            .padding(16)
-            .background(.black.opacity(0.6), in: RoundedRectangle(cornerRadius: 16))
+            .padding(18)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .liquidGlass(in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+            .padding(.horizontal, 24)
             .transition(.opacity.combined(with: .scale))
         }
     }
@@ -202,9 +204,9 @@ struct PhotoCardView: View {
         Label(title, systemImage: icon)
             .font(.footnote.weight(.semibold))
             .foregroundStyle(.white)
-            .padding(.horizontal, 14)
-            .padding(.vertical, 8)
-            .background(.white.opacity(0.18), in: Capsule())
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 10)
+            .liquidGlass(interactive: true, in: Capsule())
     }
 
     private func load() async {
