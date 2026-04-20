@@ -13,6 +13,7 @@ struct PhotoCardView: View {
     @State private var hasTriggeredHaptic = false
     @State private var isShowingMetadata = false
     @State private var isPlayingVideo = false
+    @State private var didJustCopy = false
 
     private let swipeThresholdFraction: CGFloat = 0.30
     private let velocityThreshold: CGFloat = 500
@@ -149,13 +150,44 @@ struct PhotoCardView: View {
     @ViewBuilder
     private var metadataOverlay: some View {
         if isShowingMetadata {
-            VStack(alignment: .leading, spacing: 6) {
-                if let date = asset.creationDate {
-                    Label(date.formatted(date: .abbreviated, time: .shortened), systemImage: "calendar")
+            VStack(alignment: .leading, spacing: 14) {
+                VStack(alignment: .leading, spacing: 6) {
+                    if let date = asset.creationDate {
+                        Label(date.formatted(date: .abbreviated, time: .shortened), systemImage: "calendar")
+                    }
+                    Label(FormatHelper.fileSize(service.fileSize(for: asset)), systemImage: "doc")
+                    if asset.location != nil {
+                        Label("Has location", systemImage: "location")
+                    }
                 }
-                Label(FormatHelper.fileSize(service.fileSize(for: asset)), systemImage: "doc")
-                if asset.location != nil {
-                    Label("Has location", systemImage: "location")
+
+                if asset.mediaType == .image, let image {
+                    HStack(spacing: 10) {
+                        Button {
+                            UIPasteboard.general.image = image
+                            Haptics.commitSuccess()
+                            withAnimation(.spring(response: 0.25, dampingFraction: 0.7)) {
+                                didJustCopy = true
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                withAnimation { didJustCopy = false }
+                            }
+                        } label: {
+                            actionPillLabel(
+                                icon: didJustCopy ? "checkmark" : "doc.on.doc",
+                                title: didJustCopy ? "Copied" : "Copy"
+                            )
+                        }
+                        .buttonStyle(.plain)
+
+                        ShareLink(
+                            item: Image(uiImage: image),
+                            preview: SharePreview("Photo", image: Image(uiImage: image))
+                        ) {
+                            actionPillLabel(icon: "square.and.arrow.up", title: "Share")
+                        }
+                        .buttonStyle(.plain)
+                    }
                 }
             }
             .font(.callout)
@@ -164,6 +196,15 @@ struct PhotoCardView: View {
             .background(.black.opacity(0.6), in: RoundedRectangle(cornerRadius: 16))
             .transition(.opacity.combined(with: .scale))
         }
+    }
+
+    private func actionPillLabel(icon: String, title: LocalizedStringKey) -> some View {
+        Label(title, systemImage: icon)
+            .font(.footnote.weight(.semibold))
+            .foregroundStyle(.white)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 8)
+            .background(.white.opacity(0.18), in: Capsule())
     }
 
     private func load() async {
