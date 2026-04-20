@@ -142,7 +142,7 @@ struct SettingsView: View {
 
     @ViewBuilder
     private var unlockButton: some View {
-        let priceText = paywall.product?.displayPrice ?? "$0.99"
+        let priceText = paywall.product?.displayPrice ?? "$2.99"
 
         if #available(iOS 26.0, *) {
             Button { showingPaywall = true } label: {

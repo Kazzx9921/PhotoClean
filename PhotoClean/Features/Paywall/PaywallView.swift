@@ -135,7 +135,7 @@ struct PaywallView: View {
 
     @ViewBuilder
     private var purchaseButton: some View {
-        let priceText = store.product?.displayPrice ?? "$0.99"
+        let priceText = store.product?.displayPrice ?? "$2.99"
 
         if #available(iOS 26.0, *) {
             Button { Task { await store.purchase() } } label: {
