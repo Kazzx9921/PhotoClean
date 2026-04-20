@@ -8,28 +8,28 @@
       "internalID" : "PC001",
       "localizations" : [
         {
-          "description" : "Unlock unlimited photo and video cleanup, forever.",
-          "displayName" : "Lifetime Unlock",
+          "description" : "Unlock unlimited photo and video cleanup.",
+          "displayName" : "Unlock PhotoClean",
           "locale" : "en_US"
         },
         {
-          "description" : "解鎖終身無限清理照片與影片。",
-          "displayName" : "終身解鎖",
+          "description" : "解鎖無限照片與影片清理,永久使用。",
+          "displayName" : "解鎖 PhotoClean",
           "locale" : "zh_Hant"
         },
         {
-          "description" : "解锁终身无限清理照片与视频。",
-          "displayName" : "终身解锁",
+          "description" : "解锁无限照片与视频清理,永久使用。",
+          "displayName" : "解锁 PhotoClean",
           "locale" : "zh_Hans"
         },
         {
-          "description" : "写真と動画の無制限整理を永久にアンロック。",
-          "displayName" : "生涯アンロック",
+          "description" : "写真と動画の無制限整理を永久解除。",
+          "displayName" : "PhotoClean のロック解除",
           "locale" : "ja_JP"
         },
         {
-          "description" : "Desbloquea limpieza ilimitada de fotos y vídeos, para siempre.",
-          "displayName" : "Desbloqueo de por vida",
+          "description" : "Limpieza de fotos y vídeos sin límite.",
+          "displayName" : "Desbloquear PhotoClean",
           "locale" : "es_ES"
         }
       ],
