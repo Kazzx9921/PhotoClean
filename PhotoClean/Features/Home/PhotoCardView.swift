@@ -40,8 +40,8 @@ struct PhotoCardView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .contentShape(Rectangle())
-            .overlay(alignment: .topLeading) { decisionIcon(.trashed) }
-            .overlay(alignment: .topTrailing) { decisionIcon(.kept) }
+            .overlay(alignment: .topTrailing) { decisionIcon(.trashed) }
+            .overlay(alignment: .topLeading) { decisionIcon(.kept) }
             .overlay(alignment: .bottomTrailing) { videoDurationBadge }
             .overlay(alignment: .center) { videoPlayButton }
             .overlay(alignment: .center) { metadataOverlay }
