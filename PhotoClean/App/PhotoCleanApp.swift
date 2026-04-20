@@ -9,6 +9,15 @@ struct PhotoCleanApp: App {
     @State private var undo = UndoStack()
     @State private var paywall = PaywallStore()
 
+    init() {
+        let override = UserDefaults.standard.string(forKey: "appLanguageOverride") ?? ""
+        if override.isEmpty {
+            UserDefaults.standard.removeObject(forKey: "AppleLanguages")
+        } else {
+            UserDefaults.standard.set([override], forKey: "AppleLanguages")
+        }
+    }
+
     var body: some Scene {
         WindowGroup {
             RootView()

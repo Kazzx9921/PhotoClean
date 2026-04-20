@@ -24,9 +24,10 @@ struct PhotoCardView: View {
                 Color.clear
 
                 if let image {
+                    let fit = aspectFitSize(image: image.size, box: geo.size)
                     Image(uiImage: image)
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
+                        .frame(width: fit.width, height: fit.height)
                         .overlay(
                             Color(swipeTintColor)
                                 .opacity(swipeTintOpacity(width: geo.size.width))
@@ -34,15 +35,15 @@ struct PhotoCardView: View {
                         )
                         .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
                         .shadow(color: .black.opacity(0.45), radius: 28, y: 14)
+                        .overlay(alignment: .topTrailing) { decisionIcon(.trashed) }
+                        .overlay(alignment: .topLeading) { decisionIcon(.kept) }
+                        .overlay(alignment: .bottomTrailing) { videoDurationBadge }
                 } else {
                     ProgressView().tint(.primary)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .contentShape(Rectangle())
-            .overlay(alignment: .topTrailing) { decisionIcon(.trashed) }
-            .overlay(alignment: .topLeading) { decisionIcon(.kept) }
-            .overlay(alignment: .bottomTrailing) { videoDurationBadge }
             .overlay(alignment: .center) { videoPlayButton }
             .overlay(alignment: .center) { metadataOverlay }
             .rotationEffect(.degrees(rotation(width: geo.size.width)))
@@ -207,6 +208,17 @@ struct PhotoCardView: View {
             .frame(maxWidth: .infinity)
             .padding(.vertical, 10)
             .liquidGlass(interactive: true, in: Capsule())
+    }
+
+    private func aspectFitSize(image: CGSize, box: CGSize) -> CGSize {
+        guard image.width > 0, image.height > 0, box.width > 0, box.height > 0 else { return box }
+        let imgAspect = image.width / image.height
+        let boxAspect = box.width / box.height
+        if imgAspect >= boxAspect {
+            return CGSize(width: box.width, height: box.width / imgAspect)
+        } else {
+            return CGSize(width: box.height * imgAspect, height: box.height)
+        }
     }
 
     private func load() async {

@@ -1,0 +1,378 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>PhotoClean App Store Slide</title>
+<style>
+  /*
+    Follows the skill's phone mockup pre-measurements (mockup.png is 1022x2082,
+    screen cutout at (52,46) size 918x1990 — https://github.com/ParthJadhav/app-store-screenshots).
+    Canvas is 1290 x 2796 (iPhone 6.9"). Each slide loaded via ?slide=1..5.
+  */
+  :root {
+    --terracotta: #E07A57;
+    --terracotta-deep: #C76947;
+    --terracotta-dark: #8A4A36;
+    --ink: #0D0C0F;
+    --ink-warm: #1A0F0A;
+    --ink-softer: #2A1814;
+    --sub: #BFB8B3;
+    --head: #FFFFFF;
+  }
+  html, body { margin: 0; padding: 0; background: #000; font-family: -apple-system, "SF Pro Display", "Inter", "PingFang TC", "PingFang SC", "Hiragino Sans", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  html[lang^="zh"] h1, html[lang="ja"] h1 { letter-spacing: -0.01em; line-height: 1.08; }
+  .stage {
+    width: 1284px; height: 2778px;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; align-items: center;
+  }
+
+  /* BACKGROUND STYLES */
+  .bg-glow-top {
+    background:
+      radial-gradient(ellipse 100% 60% at 50% -10%, var(--terracotta) 0%, rgba(224,122,87,0.55) 18%, rgba(224,122,87,0.0) 55%),
+      radial-gradient(circle at 15% 20%, rgba(224,122,87,0.22) 0%, transparent 40%),
+      linear-gradient(180deg, #1E100A 0%, var(--ink) 70%);
+  }
+  .bg-glow-center {
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 38%, rgba(224,122,87,0.6) 0%, rgba(224,122,87,0.15) 30%, transparent 60%),
+      radial-gradient(circle at 85% 85%, rgba(199,105,71,0.25) 0%, transparent 40%),
+      linear-gradient(180deg, #180B06 0%, var(--ink) 100%);
+  }
+  .bg-flat-ink {
+    background:
+      radial-gradient(ellipse 90% 45% at 50% 100%, rgba(199,105,71,0.18) 0%, transparent 55%),
+      linear-gradient(180deg, #13090B 0%, var(--ink) 60%, #0A0508 100%);
+  }
+  .bg-glow-bottom {
+    background:
+      radial-gradient(ellipse 110% 55% at 50% 110%, var(--terracotta) 0%, rgba(224,122,87,0.45) 18%, rgba(224,122,87,0) 55%),
+      radial-gradient(circle at 80% 20%, rgba(199,105,71,0.18) 0%, transparent 45%),
+      linear-gradient(0deg, #1E100A 0%, var(--ink) 70%);
+  }
+  .bg-brand {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 15%, #F08D6A 0%, var(--terracotta) 30%, var(--terracotta-deep) 60%, var(--terracotta-dark) 100%);
+  }
+
+  /* GRAIN / TEXTURE */
+  .stage::before {
+    content: "";
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      radial-gradient(circle at 18% 22%, rgba(255,255,255,0.04) 0, transparent 1.2px),
+      radial-gradient(circle at 78% 65%, rgba(255,255,255,0.03) 0, transparent 1px);
+    background-size: 220px 220px, 170px 170px;
+    mix-blend-mode: screen;
+    opacity: 0.9;
+  }
+  .stage::after {
+    /* Subtle vignette */
+    content: "";
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 120% 70% at 50% 50%, transparent 55%, rgba(0,0,0,0.35) 100%);
+  }
+
+  /* TEXT */
+  .copy {
+    position: relative; z-index: 5;
+    padding: 180px 92px 0; text-align: center;
+    width: 100%; box-sizing: border-box;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 36px; font-weight: 600; letter-spacing: 0.12em;
+    color: var(--terracotta);
+    text-transform: uppercase;
+    padding: 12px 22px;
+    border: 1.5px solid rgba(224,122,87,0.45);
+    border-radius: 100px;
+    margin-bottom: 46px;
+    background: rgba(224,122,87,0.08);
+    backdrop-filter: blur(6px);
+  }
+  h1 {
+    font-size: 158px; line-height: 0.96; letter-spacing: -0.035em;
+    color: var(--head); margin: 0 0 38px;
+    font-weight: 800;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.4);
+  }
+  h1 .accent { color: var(--terracotta); }
+  h1.small { font-size: 126px; }
+  .sub {
+    font-size: 52px; line-height: 1.22;
+    color: var(--sub); font-weight: 500;
+    margin: 0 auto; max-width: 1060px;
+    letter-spacing: -0.01em;
+  }
+
+  /* PHONE MOCKUP — mirrors skill's SKILL.md measurements.
+     Bottom of device intentionally bleeds off canvas (~130px) so the text block
+     gets proper breathing room above the phone. */
+  .phone-wrap {
+    position: absolute; z-index: 3;
+    left: 50%; transform: translateX(-50%);
+    bottom: -130px;
+    width: 780px;
+    filter: drop-shadow(0 32px 60px rgba(0,0,0,0.55));
+  }
+  .phone {
+    position: relative;
+    aspect-ratio: 1022 / 2082;
+    width: 100%;
+  }
+  .phone-frame {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: contain; pointer-events: none; z-index: 1;
+  }
+  .phone-screen {
+    position: absolute; overflow: hidden;
+    /* pre-measured from skill SKILL.md */
+    left: calc(52 / 1022 * 100%);
+    top: calc(46 / 2082 * 100%);
+    width: calc(918 / 1022 * 100%);
+    height: calc(1990 / 2082 * 100%);
+    border-radius: calc(126 / 918 * 100%) / calc(126 / 1990 * 100%);
+    z-index: 10;
+    background: #000;
+  }
+  .phone-screen img {
+    display: block; width: 100%; height: 100%; object-fit: cover; object-position: top;
+  }
+
+  /* Per-slide width tweaks (all share the default bottom bleed) */
+  .slide-hero .phone-wrap { width: 800px; }
+  .slide-video .phone-wrap { width: 780px; }
+  .slide-safe .phone-wrap { width: 800px; }
+  .slide-undo .phone-wrap { width: 780px; }
+  .slide-offline .phone-wrap { width: 760px; }
+
+  /* Floating orbs for extra depth */
+  .orb {
+    position: absolute; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(224,122,87,0.55), rgba(224,122,87,0) 70%);
+    filter: blur(40px);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .orb.a { width: 420px; height: 420px; top: -120px; left: -80px; }
+  .orb.b { width: 320px; height: 320px; top: 30%; right: -120px; opacity: 0.75; }
+  .orb.c { width: 500px; height: 500px; bottom: -180px; left: -160px; opacity: 0.55; }
+
+  /* Brand slide text color tweaks */
+  .slide-offline h1 { color: #FFF8F4; text-shadow: 0 4px 24px rgba(50,20,10,0.5); }
+  .slide-offline h1 .accent { color: #4A1F12; text-shadow: 0 2px 12px rgba(255,220,200,0.35); }
+  .slide-offline .sub { color: rgba(255,245,240,0.82); }
+  .slide-offline .tag {
+    color: rgba(255,255,255,0.95);
+    border-color: rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.12);
+  }
+</style>
+</head>
+<body>
+  <div id="stage" class="stage"></div>
+  <script>
+    // Maps our marketing lang to the screenshot folder (zh-Hant and zh-Hans share the zh set).
+    const SCREENSHOT_DIR = {
+      "en": "en",
+      "zh-Hant": "zh",
+      "zh-Hans": "zh",
+      "ja": "ja",
+      "es": "es",
+    };
+
+    const SLIDES = {
+      en: {
+        1: {
+          cls: "slide-hero bg-glow-top",
+          tag: "Free up space",
+          heading: `Swipe your<br>way to<br><span class="accent">gigabytes free.</span>`,
+          sub: "Phone full? Skip the cloud upgrade.<br>A few minutes of swiping = real space back.",
+          orbs: true, headSize: "big",
+        },
+        2: {
+          cls: "slide-video bg-glow-center",
+          tag: "Videos eat storage",
+          heading: `One clip<br>can be over<br><span class="accent">a gigabyte.</span>`,
+          sub: "Play it right on the card, then decide if it stays.",
+          orbs: true, headSize: "big",
+        },
+        3: {
+          cls: "slide-safe bg-flat-ink",
+          tag: "Safe delete",
+          heading: `Swipe freely.<br>Nothing gets<br><span class="accent">lost.</span>`,
+          sub: "A left swipe just marks it. You confirm before anything is actually deleted.",
+          orbs: false, headSize: "big",
+        },
+        4: {
+          cls: "slide-undo bg-glow-bottom",
+          tag: "Reclaim instantly",
+          heading: `Clear the bin,<br>your space<br><span class="accent">comes back.</span>`,
+          sub: "A stuffed library turns into GBs free in minutes.",
+          orbs: true, headSize: "big",
+        },
+        5: {
+          cls: "slide-offline bg-brand",
+          tag: "Skip the cloud bill",
+          heading: `Free space<br>= saved<br><span class="accent">cloud fees.</span>`,
+          sub: "Don't rush to pay for more cloud storage.<br>The space was already there — just hidden.",
+          orbs: false, headSize: "small",
+        },
+      },
+      "zh-Hant": {
+        1: {
+          cls: "slide-hero bg-glow-top",
+          tag: "釋放空間",
+          heading: `一張一張滑<br>把空間<br><span class="accent">滑回來</span>`,
+          sub: "手機滿了?先別急著買雲端。<br>幾分鐘就能清出好幾 GB。",
+          orbs: true, headSize: "big",
+        },
+        2: {
+          cls: "slide-video bg-glow-center",
+          tag: "相似照一眼比",
+          heading: `一組相似的<br>只留<br><span class="accent">最好那張</span>`,
+          sub: "底下縮圖條直接切換,不用翻來翻去一張張找。",
+          orbs: true, headSize: "big",
+        },
+        3: {
+          cls: "slide-safe bg-flat-ink",
+          tag: "安全刪除",
+          heading: `放心滑<br>不會<br><span class="accent">誤刪</span>`,
+          sub: "左滑只是先標記，最後還要你確認才真的刪。",
+          orbs: false, headSize: "big",
+        },
+        4: {
+          cls: "slide-undo bg-glow-bottom",
+          tag: "一鍵清空",
+          heading: `整批送走<br>空間<br><span class="accent">馬上回來</span>`,
+          sub: "滿出來的相簿，幾分鐘騰出好幾 GB。",
+          orbs: true, headSize: "big",
+        },
+        5: {
+          cls: "slide-offline bg-brand",
+          tag: "省下雲端月費",
+          heading: `釋放的空間<br>就是<br><span class="accent">省下的月費</span>`,
+          sub: "雲端硬碟不用急著加購。<br>手機本來就有空間，只是要整理。",
+          orbs: false, headSize: "small",
+        },
+      },
+      "ja": {
+        1: {
+          cls: "slide-hero bg-glow-top",
+          tag: "空きを取り戻す",
+          heading: `スワイプで<br>容量を<br><span class="accent">取り戻す</span>`,
+          sub: "容量不足?クラウドを買う前に。<br>数分で数GB空けられます。",
+          orbs: true, headSize: "big",
+        },
+        2: {
+          cls: "slide-video bg-glow-center",
+          tag: "似た写真を一気に",
+          heading: `似たショット<br>ベストの<br><span class="accent">一枚だけ</span>`,
+          sub: "下のサムネイルで切り替え、一度で見比べ。",
+          orbs: true, headSize: "big",
+        },
+        3: {
+          cls: "slide-safe bg-flat-ink",
+          tag: "安全な削除",
+          heading: `安心して<br>スワイプ<br><span class="accent">誤削除ゼロ</span>`,
+          sub: "左スワイプは仮置き、最後の確認で初めて削除。",
+          orbs: false, headSize: "big",
+        },
+        4: {
+          cls: "slide-undo bg-glow-bottom",
+          tag: "まとめて削除",
+          heading: `一括で処分<br>容量が<br><span class="accent">戻ってくる</span>`,
+          sub: "パンパンのライブラリも、数分で数GB解放。",
+          orbs: true, headSize: "big",
+        },
+        5: {
+          cls: "slide-offline bg-brand",
+          tag: "クラウド代を節約",
+          heading: `空いた容量が<br>月額料金の<br><span class="accent">節約に</span>`,
+          sub: "クラウドストレージの追加は待って。<br>容量はもともとある、整理するだけ。",
+          orbs: false, headSize: "small",
+        },
+      },
+      "es": {
+        1: {
+          cls: "slide-hero bg-glow-top",
+          tag: "Libera espacio",
+          heading: `Desliza y<br>recupera<br><span class="accent">gigabytes</span>`,
+          sub: "¿Móvil lleno? Aún no pagues la nube.<br>Unos minutos = GBs libres de verdad.",
+          orbs: true, headSize: "big",
+        },
+        2: {
+          cls: "slide-video bg-glow-center",
+          tag: "Compara similares",
+          heading: `Fotos<br>parecidas<br><span class="accent">queda la mejor</span>`,
+          sub: "Cambia con las miniaturas de abajo y compara de un vistazo.",
+          orbs: true, headSize: "big",
+        },
+        3: {
+          cls: "slide-safe bg-flat-ink",
+          tag: "Borrado seguro",
+          heading: `Desliza sin<br>miedo<br><span class="accent">nada se pierde</span>`,
+          sub: "Deslizar solo marca. Confirmas antes de borrar de verdad.",
+          orbs: false, headSize: "big",
+        },
+        4: {
+          cls: "slide-undo bg-glow-bottom",
+          tag: "Vacía de una vez",
+          heading: `Vacía todo<br>el espacio<br><span class="accent">vuelve ya</span>`,
+          sub: "Una galería a tope se convierte en GBs libres en minutos.",
+          orbs: true, headSize: "big",
+        },
+        5: {
+          cls: "slide-offline bg-brand",
+          tag: "Menos nube, menos gasto",
+          heading: `Espacio libre<br>es ahorro<br><span class="accent">en la nube</span>`,
+          sub: "No compres más almacenamiento en la nube todavía.<br>El espacio ya estaba ahí.",
+          orbs: false, headSize: "small",
+        },
+      },
+    };
+
+    const params = new URLSearchParams(location.search);
+    const lang = params.get("lang") || "en";
+    const slideId = params.get("slide") || "1";
+    const slide = (SLIDES[lang] || SLIDES.en)[slideId];
+    if (lang === "zh-Hant" || lang === "zh-Hans" || lang === "ja") {
+      document.documentElement.lang = lang;
+    }
+
+    const stage = document.getElementById("stage");
+    stage.className = `stage ${slide.cls}`;
+
+    let orbsHTML = "";
+    if (slide.orbs) orbsHTML = `<div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>`;
+
+    const dir = SCREENSHOT_DIR[lang] || "en";
+    const src = `public/screenshots/${dir}/s${slideId}.png`;
+
+    stage.innerHTML = `
+      ${orbsHTML}
+      <div class="copy">
+        <div class="tag">${slide.tag}</div>
+        <h1 class="${slide.headSize === 'small' ? 'small' : ''}">${slide.heading}</h1>
+        <div class="sub">${slide.sub}</div>
+      </div>
+      <div class="phone-wrap">
+        <div class="phone">
+          <img class="phone-frame" src="public/mockup.png" />
+          <div class="phone-screen">
+            <img src="${src}" />
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Signal ready for Chrome screenshot
+    window.__ready = false;
+    const imgs = Array.from(document.images);
+    Promise.all(imgs.map(i => i.complete ? null : new Promise(r => i.onload = i.onerror = r)))
+      .then(() => { window.__ready = true; });
+  </script>
+</body>
+</html>

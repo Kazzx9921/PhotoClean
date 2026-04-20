@@ -6,6 +6,8 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
 
     @State private var showingPaywall = false
+    @AppStorage("appLanguageOverride") private var languageOverride: String = ""
+    @State private var showLanguageRestartAlert = false
 
     private let githubURL = URL(string: "https://github.com/Kazzx9921/PhotoClean")!
     private let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0.0"
@@ -31,6 +33,21 @@ struct SettingsView: View {
                     Text("Lifetime")
                 } footer: {
                     Text("Only counts photos confirmed deleted to iOS Recently Deleted. Items still in the app trash don't count.")
+                }
+
+                Section {
+                    Picker("App language", selection: $languageOverride) {
+                        ForEach(AppLanguage.allCases) { lang in
+                            Text(lang.displayName).tag(lang.rawValue)
+                        }
+                    }
+                    .onChange(of: languageOverride) { _, _ in
+                        showLanguageRestartAlert = true
+                    }
+                } header: {
+                    Text("Language")
+                } footer: {
+                    Text("Relaunch the app for the language change to take effect.")
                 }
 
                 Section {
@@ -60,8 +77,34 @@ struct SettingsView: View {
             .sheet(isPresented: $showingPaywall) {
                 PaywallView()
             }
+            .alert("Relaunch required", isPresented: $showLanguageRestartAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("Close and reopen PhotoClean for the new language to take effect.")
+            }
         }
         .presentationDetents([.medium, .large])
+    }
+
+    private enum AppLanguage: String, CaseIterable, Identifiable {
+        case system = ""
+        case en = "en"
+        case zhHant = "zh-Hant"
+        case zhHans = "zh-Hans"
+        case ja = "ja"
+        case es = "es"
+
+        var id: String { rawValue }
+        var displayName: String {
+            switch self {
+            case .system: return "System default"
+            case .en: return "English"
+            case .zhHant: return "繁體中文"
+            case .zhHans: return "简体中文"
+            case .ja: return "日本語"
+            case .es: return "Español"
+            }
+        }
     }
 
     // MARK: - Status card

@@ -52,6 +52,17 @@ docs/
 memory/
 .claude/
 
+# ---- Staged marketing inputs (personal phone screenshots) ----
+# slide.html / mockup.png are safe to publish; only the per-language
+# screenshot folders contain the user's real photo-library content.
+_screenshot-gen/public/screenshots/
+
+# ---- Editors / IDEs ----
+.vscode/
+.idea/
+.cursor/
+*.code-workspace
+
 # ---- Editor scratch ----
 Untitled
 Untitled.*
