@@ -20,6 +20,10 @@ final class TrashViewModel {
 
     var count: Int { items.count }
 
+    var freeQuotaRemaining: Int {
+        paywall.freeQuotaRemaining(currentTotal: trash.totalCommittedCount)
+    }
+
     init(service: PhotoLibraryService, trash: TrashStore, paywall: PaywallStore) {
         self.service = service
         self.trash = trash
@@ -54,14 +58,28 @@ final class TrashViewModel {
 
     func performCommit() async {
         isConfirmingCommit = false
+        await commit(assets: items, freedBytes: totalBytes)
+    }
+
+    /// Commit only the first N items (used from the paywall when the user
+    /// prefers to stay on the free tier). N is clamped to remaining quota and
+    /// current item count.
+    func commitFreeQuotaOnly() async {
+        let n = min(freeQuotaRemaining, items.count)
+        guard n > 0 else { return }
+        let snapshot = Array(items.prefix(n))
+        let bytes = snapshot.reduce(0) { $0 + service.fileSize(for: $1) }
+        paywall.shouldShowPaywall = false
+        await commit(assets: snapshot, freedBytes: bytes)
+    }
+
+    private func commit(assets: [PHAsset], freedBytes: Int64) async {
         isCommitting = true
-        let bytes = totalBytes
-        let snapshot = items
-        let ok = await service.commitDeletion(assets: snapshot)
+        let ok = await service.commitDeletion(assets: assets)
         if ok {
-            lastCommittedCount = snapshot.count
-            lastCommittedBytes = bytes
-            trash.commitTrashed(ids: snapshot.map { $0.localIdentifier }, freedBytes: bytes)
+            lastCommittedCount = assets.count
+            lastCommittedBytes = freedBytes
+            trash.commitTrashed(ids: assets.map { $0.localIdentifier }, freedBytes: freedBytes)
             didCommitSucceed = true
             Haptics.commitSuccess()
         }

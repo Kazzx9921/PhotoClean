@@ -5,6 +5,14 @@ struct PaywallView: View {
     @Environment(PaywallStore.self) private var store
     @Environment(\.dismiss) private var dismiss
 
+    var freeQuotaRemaining: Int? = nil
+    var onCommitFreeQuota: (() -> Void)? = nil
+
+    private var showsPartialOption: Bool {
+        guard let remaining = freeQuotaRemaining, onCommitFreeQuota != nil else { return false }
+        return remaining > 0
+    }
+
     var body: some View {
         ZStack(alignment: .topTrailing) {
             Color(.systemBackground).ignoresSafeArea()
@@ -86,6 +94,20 @@ struct PaywallView: View {
     private var actions: some View {
         VStack(spacing: 14) {
             purchaseButton
+
+            if showsPartialOption, let remaining = freeQuotaRemaining {
+                Button {
+                    onCommitFreeQuota?()
+                } label: {
+                    Text("Delete \(remaining) photos only (free)")
+                        .font(.footnote.weight(.medium))
+                        .foregroundStyle(.primary)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .liquidGlass(interactive: true, in: Capsule())
+                }
+                .buttonStyle(.plain)
+            }
 
             Button {
                 Task { await store.restore() }

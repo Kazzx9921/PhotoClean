@@ -39,7 +39,12 @@ struct TrashView: View {
                     .interactiveDismissDisabled()
                 }
                 .sheet(isPresented: $paywall.shouldShowPaywall) {
-                    PaywallView()
+                    PaywallView(
+                        freeQuotaRemaining: vm.freeQuotaRemaining,
+                        onCommitFreeQuota: {
+                            Task { await vm.commitFreeQuotaOnly() }
+                        }
+                    )
                 }
         }
     }
