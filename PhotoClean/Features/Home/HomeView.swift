@@ -138,12 +138,14 @@ struct HomeView: View {
                 onSwipeRight: { vm.swipeRight() }
             )
             .id(asset.localIdentifier)
-        } else {
+        } else if vm.hasLoadedOnce {
             EmptyQueueView(
                 trashedCount: vm.trashedCount,
                 freedBytes: vm.pendingTrashBytes,
                 onOpenTrash: { showTrash = true }
             )
+        } else {
+            ProgressView().tint(.primary)
         }
     }
 }

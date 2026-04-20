@@ -14,6 +14,7 @@ final class HomeViewModel {
     private(set) var currentIndex: Int = 0
     private(set) var pendingTrashBytes: Int64 = 0
     private(set) var peekStripAssets: [PHAsset] = []
+    private(set) var hasLoadedOnce = false
 
     var peekOverrideAsset: PHAsset?
 
@@ -56,6 +57,7 @@ final class HomeViewModel {
         guard service.authorizationStatus != .notDetermined else { return }
         if service.assets.isEmpty { service.refreshAssets() }
         syncFromLibrary()
+        hasLoadedOnce = true
     }
 
     func rebuildQueue() {
