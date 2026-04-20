@@ -52,7 +52,7 @@ struct PaywallView: View {
                 .font(.title2.weight(.bold))
                 .multilineTextAlignment(.center)
 
-            Text("Reclaim your storage. Stop paying for iCloud or bigger phones just to hold photos you'll never look at again.")
+            Text("Reclaim your storage. Stop paying for cloud storage or bigger phones just to hold photos you'll never look at again.")
                 .font(.callout)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
