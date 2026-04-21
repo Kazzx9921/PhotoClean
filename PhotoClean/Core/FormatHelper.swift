@@ -4,9 +4,13 @@ enum FormatHelper {
     private static let gbThreshold: Int64 = 1024 * 1024 * 1024
 
     static func fileSize(_ bytes: Int64) -> String {
-        guard bytes > 0 else { return "0 MB" }
-        if bytes < gbThreshold {
-            let mb = bytes / (1024 * 1024)
+        guard bytes > 0 else { return "0 KB" }
+        let mbBytes: Double = 1024 * 1024
+        if bytes < Int64(mbBytes) {
+            let kb = max(1, Int((Double(bytes) / 1024.0).rounded()))
+            return "\(kb) KB"
+        } else if bytes < gbThreshold {
+            let mb = Int((Double(bytes) / mbBytes).rounded())
             return "\(mb) MB"
         } else {
             let gb = Double(bytes) / Double(gbThreshold)
