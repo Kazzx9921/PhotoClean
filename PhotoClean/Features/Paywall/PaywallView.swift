@@ -1,5 +1,6 @@
 import SwiftUI
 import StoreKit
+import UIKit
 
 struct PaywallView: View {
     @Environment(PaywallStore.self) private var store
@@ -107,19 +108,34 @@ struct PaywallView: View {
                 .buttonStyle(.plain)
             }
 
-            Button {
-                Task { await store.restore() }
-            } label: {
-                if store.isRestoring {
-                    ProgressView().tint(.secondary)
-                } else {
-                    Text("Restore Purchase")
+            HStack(spacing: 14) {
+                Button {
+                    Task { await store.restore() }
+                } label: {
+                    if store.isRestoring {
+                        ProgressView().tint(.secondary)
+                    } else {
+                        Text("Restore Purchase")
+                            .font(.footnote.weight(.medium))
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .buttonStyle(.plain)
+                .disabled(store.isRestoring)
+
+                Text("·")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+
+                Button {
+                    presentRedeemSheet()
+                } label: {
+                    Text("Redeem code")
                         .font(.footnote.weight(.medium))
                         .foregroundStyle(.secondary)
                 }
+                .buttonStyle(.plain)
             }
-            .buttonStyle(.plain)
-            .disabled(store.isRestoring)
 
             if let error = store.lastError {
                 Text(error)
@@ -179,6 +195,17 @@ struct PaywallView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 11)
+    }
+
+    // MARK: - Offer code redemption
+
+    private func presentRedeemSheet() {
+        Task { @MainActor in
+            guard let scene = UIApplication.shared.connectedScenes
+                .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
+            else { return }
+            try? await AppStore.presentOfferCodeRedeemSheet(in: scene)
+        }
     }
 
     // MARK: - Close

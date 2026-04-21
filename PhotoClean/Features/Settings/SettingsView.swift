@@ -1,4 +1,6 @@
 import SwiftUI
+import StoreKit
+import UIKit
 
 struct SettingsView: View {
     @Environment(TrashStore.self) private var trash
@@ -10,7 +12,7 @@ struct SettingsView: View {
     @State private var showLanguageRestartAlert = false
 
     private let githubURL = URL(string: "https://github.com/Kazzx9921/PhotoClean")!
-    private let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0.0"
+    private let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0.1"
 
     var body: some View {
         NavigationStack {
@@ -163,24 +165,49 @@ struct SettingsView: View {
 
             unlockButton
 
-            Button {
-                Task { await paywall.restore() }
-            } label: {
-                if paywall.isRestoring {
-                    ProgressView().tint(.secondary)
-                } else {
-                    Text("Already purchased? Restore")
+            HStack(spacing: 14) {
+                Spacer()
+                Button {
+                    Task { await paywall.restore() }
+                } label: {
+                    if paywall.isRestoring {
+                        ProgressView().tint(.secondary)
+                    } else {
+                        Text("Restore Purchase")
+                            .font(.footnote.weight(.medium))
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .buttonStyle(.plain)
+                .disabled(paywall.isRestoring)
+
+                Text("·")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+
+                Button {
+                    presentRedeemSheet()
+                } label: {
+                    Text("Redeem code")
                         .font(.footnote.weight(.medium))
                         .foregroundStyle(.secondary)
-                        .frame(maxWidth: .infinity)
                 }
+                .buttonStyle(.plain)
+                Spacer()
             }
-            .buttonStyle(.plain)
-            .disabled(paywall.isRestoring)
         }
         .padding(18)
         .frame(maxWidth: .infinity, alignment: .leading)
         .liquidGlass(in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+    }
+
+    private func presentRedeemSheet() {
+        Task { @MainActor in
+            guard let scene = UIApplication.shared.connectedScenes
+                .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
+            else { return }
+            try? await AppStore.presentOfferCodeRedeemSheet(in: scene)
+        }
     }
 
     @ViewBuilder

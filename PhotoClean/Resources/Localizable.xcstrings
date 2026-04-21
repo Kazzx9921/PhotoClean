@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "·" : {
+
+    },
     "%@ / %@" : {
       "localizations" : {
         "en" : {
@@ -226,6 +229,7 @@
       }
     },
     "Already purchased? Restore" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -1404,6 +1408,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "拿回你的儲存空間。再也不用為了幾張再也不會看的照片而付雲端月費或換更大容量的手機。"
+          }
+        }
+      }
+    },
+    "Redeem code" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Canjear código"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コードを利用"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "兑换代码"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "兌換代碼"
           }
         }
       }

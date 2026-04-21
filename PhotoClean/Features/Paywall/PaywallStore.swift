@@ -106,6 +106,8 @@ final class PaywallStore {
             if !isUnlocked {
                 lastError = String(localized: "No prior purchase found.")
             }
+        } catch StoreKitError.userCancelled {
+            return
         } catch {
             lastError = error.localizedDescription
         }
