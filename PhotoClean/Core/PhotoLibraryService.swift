@@ -13,9 +13,16 @@ final class PhotoLibraryService {
     private(set) var libraryVersion: Int = 0
 
     private let imageManager = PHCachingImageManager()
-    private var thumbnailCache: [String: UIImage] = [:]
-    private var thumbnailOrder: [String] = []
-    private var fileSizeCache: [String: Int64] = [:]
+    private let thumbnailCache: NSCache<NSString, UIImage> = {
+        let cache = NSCache<NSString, UIImage>()
+        cache.countLimit = 80
+        return cache
+    }()
+    private let fileSizeCache: NSCache<NSString, NSNumber> = {
+        let cache = NSCache<NSString, NSNumber>()
+        cache.countLimit = 2000
+        return cache
+    }()
 
     private let changeObserver = ChangeObserver()
     private var observerRegistered = false
@@ -76,9 +83,8 @@ final class PhotoLibraryService {
     }
 
     func thumbnail(for asset: PHAsset, targetSize: CGSize = CGSize(width: 150, height: 150)) async -> UIImage? {
-        let id = asset.localIdentifier
-        if let cached = thumbnailCache[id] {
-            touchLRU(id)
+        let key = asset.localIdentifier as NSString
+        if let cached = thumbnailCache.object(forKey: key) {
             return cached
         }
 
@@ -93,12 +99,7 @@ final class PhotoLibraryService {
         )
         guard let image else { return nil }
 
-        thumbnailCache[id] = image
-        thumbnailOrder.append(id)
-        while thumbnailOrder.count > 50 {
-            let evict = thumbnailOrder.removeFirst()
-            thumbnailCache.removeValue(forKey: evict)
-        }
+        thumbnailCache.setObject(image, forKey: key)
         return image
     }
 
@@ -133,13 +134,6 @@ final class PhotoLibraryService {
         }
     }
 
-    private func touchLRU(_ id: String) {
-        if let idx = thumbnailOrder.firstIndex(of: id) {
-            thumbnailOrder.remove(at: idx)
-            thumbnailOrder.append(id)
-        }
-    }
-
     func startCaching(assets: [PHAsset]) {
         imageManager.startCachingImages(
             for: assets,
@@ -159,14 +153,20 @@ final class PhotoLibraryService {
     }
 
     func fileSize(for asset: PHAsset) -> Int64 {
-        let id = asset.localIdentifier
-        if let cached = fileSizeCache[id] { return cached }
-        let resources = PHAssetResource.assetResources(for: asset)
-        let total = resources.reduce(Int64(0)) { sum, resource in
-            sum + ((resource.value(forKey: "fileSize") as? NSNumber)?.int64Value ?? 0)
+        let key = asset.localIdentifier as NSString
+        if let cached = fileSizeCache.object(forKey: key) {
+            return cached.int64Value
         }
-        fileSizeCache[id] = total
-        return total
+        let resources = PHAssetResource.assetResources(for: asset)
+        let preferredTypes: [PHAssetResourceType] = asset.mediaType == .video
+            ? [.video, .fullSizeVideo]
+            : [.photo, .fullSizePhoto]
+        let primary = preferredTypes.lazy.compactMap { type in
+            resources.first(where: { $0.type == type })
+        }.first ?? resources.first
+        let size = (primary?.value(forKey: "fileSize") as? NSNumber)?.int64Value ?? 0
+        fileSizeCache.setObject(NSNumber(value: size), forKey: key)
+        return size
     }
 
     @discardableResult

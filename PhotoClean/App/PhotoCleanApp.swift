@@ -11,10 +11,10 @@ struct PhotoCleanApp: App {
 
     init() {
         let override = UserDefaults.standard.string(forKey: "appLanguageOverride") ?? ""
-        if override.isEmpty {
-            UserDefaults.standard.removeObject(forKey: "AppleLanguages")
-        } else {
+        if AppLanguage.applicableRawValues.contains(override) {
             UserDefaults.standard.set([override], forKey: "AppleLanguages")
+        } else {
+            UserDefaults.standard.removeObject(forKey: "AppleLanguages")
         }
     }
 

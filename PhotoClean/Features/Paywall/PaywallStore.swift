@@ -34,9 +34,23 @@ final class PaywallStore {
             }
         }
         Task { [weak self] in
-            for await result in Transaction.currentEntitlements {
-                await self?.handle(result)
+            await self?.verifyEntitlements()
+        }
+    }
+
+    private func verifyEntitlements() async {
+        var foundValidEntitlement = false
+        for await result in Transaction.currentEntitlements {
+            if case .verified(let tx) = result,
+               tx.productID == Self.productID,
+               tx.revocationDate == nil {
+                foundValidEntitlement = true
             }
+            await handle(result)
+        }
+        // Revoke stale unlock cache if no valid entitlement exists (e.g. switched Apple ID).
+        if !foundValidEntitlement, isUnlocked {
+            setUnlocked(false)
         }
     }
 

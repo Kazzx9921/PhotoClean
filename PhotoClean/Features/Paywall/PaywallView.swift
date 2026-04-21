@@ -1,6 +1,5 @@
 import SwiftUI
 import StoreKit
-import UIKit
 
 struct PaywallView: View {
     @Environment(PaywallStore.self) private var store
@@ -108,33 +107,8 @@ struct PaywallView: View {
                 .buttonStyle(.plain)
             }
 
-            HStack(spacing: 14) {
-                Button {
-                    Task { await store.restore() }
-                } label: {
-                    if store.isRestoring {
-                        ProgressView().tint(.secondary)
-                    } else {
-                        Text("Restore Purchase")
-                            .font(.footnote.weight(.medium))
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .buttonStyle(.plain)
-                .disabled(store.isRestoring)
-
-                Text("·")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-
-                Button {
-                    presentRedeemSheet()
-                } label: {
-                    Text("Redeem code")
-                        .font(.footnote.weight(.medium))
-                        .foregroundStyle(.secondary)
-                }
-                .buttonStyle(.plain)
+            RestoreRedeemRow(isRestoring: store.isRestoring) {
+                Task { await store.restore() }
             }
 
             if let error = store.lastError {
@@ -162,25 +136,10 @@ struct PaywallView: View {
             Button { Task { await store.purchase() } } label: {
                 purchaseLabel(priceText: priceText)
                     .foregroundStyle(.white)
-                    .background(glossyCapsule)
+                    .background(GlossyCapsule())
             }
             .buttonStyle(.plain)
             .disabled(store.isPurchasing || store.product == nil)
-        }
-    }
-
-    private var glossyCapsule: some View {
-        ZStack {
-            Capsule().fill(Color.accentColor)
-            Capsule().fill(
-                LinearGradient(
-                    colors: [Color.white.opacity(0.28), .clear],
-                    startPoint: .top,
-                    endPoint: .center
-                )
-            )
-            Capsule()
-                .strokeBorder(Color.white.opacity(0.18), lineWidth: 0.5)
         }
     }
 
@@ -195,17 +154,6 @@ struct PaywallView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 11)
-    }
-
-    // MARK: - Offer code redemption
-
-    private func presentRedeemSheet() {
-        Task { @MainActor in
-            guard let scene = UIApplication.shared.connectedScenes
-                .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
-            else { return }
-            try? await AppStore.presentOfferCodeRedeemSheet(in: scene)
-        }
     }
 
     // MARK: - Close

@@ -179,13 +179,16 @@ private struct CommitSuccessView: View {
     let bytes: Int64
     var onDone: () -> Void
 
+    @State private var bounceTrigger = 0
+
     var body: some View {
         VStack(spacing: 20) {
             Spacer()
             Image(systemName: "sparkles")
                 .font(.system(size: 80, weight: .bold))
                 .foregroundStyle(.yellow)
-                .symbolEffect(.bounce)
+                .symbolEffect(.bounce, value: bounceTrigger)
+                .onAppear { bounceTrigger += 1 }
             Text("Freed \(FormatHelper.fileSize(bytes))!")
                 .font(.title.weight(.bold))
             Text("Photos stay in iOS Recently Deleted for 30 days. Empty them from the system Photos app to free space immediately.")

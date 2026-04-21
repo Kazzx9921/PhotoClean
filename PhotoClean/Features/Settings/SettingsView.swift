@@ -1,6 +1,5 @@
 import SwiftUI
 import StoreKit
-import UIKit
 
 struct SettingsView: View {
     @Environment(TrashStore.self) private var trash
@@ -19,7 +18,7 @@ struct SettingsView: View {
             Form {
                 Section {
                     statusCard
-                        .listRowInsets(EdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16))
+                        .listRowInsets(EdgeInsets())
                         .listRowBackground(Color.clear)
                 }
 
@@ -88,27 +87,6 @@ struct SettingsView: View {
         .presentationDetents([.medium, .large])
     }
 
-    private enum AppLanguage: String, CaseIterable, Identifiable {
-        case system = ""
-        case en = "en"
-        case zhHant = "zh-Hant"
-        case zhHans = "zh-Hans"
-        case ja = "ja"
-        case es = "es"
-
-        var id: String { rawValue }
-        var displayName: String {
-            switch self {
-            case .system: return "System default"
-            case .en: return "English"
-            case .zhHant: return "繁體中文"
-            case .zhHans: return "简体中文"
-            case .ja: return "日本語"
-            case .es: return "Español"
-            }
-        }
-    }
-
     // MARK: - Status card
 
     @ViewBuilder
@@ -122,16 +100,14 @@ struct SettingsView: View {
 
     private var proCard: some View {
         VStack(alignment: .leading, spacing: 12) {
-            HStack(spacing: 10) {
-                Image(systemName: "sparkles")
-                    .font(.system(size: 22, weight: .bold))
-                    .foregroundStyle(.yellow)
+            HStack(spacing: 12) {
+                Image(systemName: "checkmark.seal.fill")
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(.white, Color.premiumGold)
+                    .font(.system(size: 26, weight: .bold))
                 Text("PhotoClean Pro")
                     .font(.title3.weight(.bold))
                 Spacer()
-                Image(systemName: "checkmark.seal.fill")
-                    .font(.system(size: 20))
-                    .foregroundStyle(.green)
             }
             Text("Unlimited cleanups unlocked. Thank you for supporting the project!")
                 .font(.footnote)
@@ -165,49 +141,13 @@ struct SettingsView: View {
 
             unlockButton
 
-            HStack(spacing: 14) {
-                Spacer()
-                Button {
-                    Task { await paywall.restore() }
-                } label: {
-                    if paywall.isRestoring {
-                        ProgressView().tint(.secondary)
-                    } else {
-                        Text("Restore Purchase")
-                            .font(.footnote.weight(.medium))
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .buttonStyle(.plain)
-                .disabled(paywall.isRestoring)
-
-                Text("·")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-
-                Button {
-                    presentRedeemSheet()
-                } label: {
-                    Text("Redeem code")
-                        .font(.footnote.weight(.medium))
-                        .foregroundStyle(.secondary)
-                }
-                .buttonStyle(.plain)
-                Spacer()
+            RestoreRedeemRow(isRestoring: paywall.isRestoring) {
+                Task { await paywall.restore() }
             }
         }
         .padding(18)
         .frame(maxWidth: .infinity, alignment: .leading)
         .liquidGlass(in: RoundedRectangle(cornerRadius: 20, style: .continuous))
-    }
-
-    private func presentRedeemSheet() {
-        Task { @MainActor in
-            guard let scene = UIApplication.shared.connectedScenes
-                .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
-            else { return }
-            try? await AppStore.presentOfferCodeRedeemSheet(in: scene)
-        }
     }
 
     @ViewBuilder
@@ -224,24 +164,9 @@ struct SettingsView: View {
             Button { showingPaywall = true } label: {
                 unlockLabel(priceText: priceText)
                     .foregroundStyle(.white)
-                    .background(glossyCapsule)
+                    .background(GlossyCapsule())
             }
             .buttonStyle(.plain)
-        }
-    }
-
-    private var glossyCapsule: some View {
-        ZStack {
-            Capsule().fill(Color.accentColor)
-            Capsule().fill(
-                LinearGradient(
-                    colors: [Color.white.opacity(0.28), .clear],
-                    startPoint: .top,
-                    endPoint: .center
-                )
-            )
-            Capsule()
-                .strokeBorder(Color.white.opacity(0.18), lineWidth: 0.5)
         }
     }
 

@@ -5,15 +5,14 @@ import Observation
     private enum Keys {
         static let keptIds = "photoclean.keptIds"
         static let trashedIds = "photoclean.trashedIds"
-        static let committedIds = "photoclean.committedIds"
         static let totalCommittedCount = "photoclean.totalCommittedCount"
         static let totalFreedBytes = "photoclean.totalFreedBytes"
         static let hasCompletedOnboarding = "photoclean.hasCompletedOnboarding"
+        static let legacyCommittedIds = "photoclean.committedIds"
     }
 
     private(set) var keptIds: Set<String>
     private(set) var trashedIds: Set<String>
-    private(set) var committedIds: Set<String>
     private(set) var totalCommittedCount: Int
     private(set) var totalFreedBytes: Int64
 
@@ -25,10 +24,10 @@ import Observation
         let defaults = UserDefaults.standard
         keptIds = Set(defaults.stringArray(forKey: Keys.keptIds) ?? [])
         trashedIds = Set(defaults.stringArray(forKey: Keys.trashedIds) ?? [])
-        committedIds = Set(defaults.stringArray(forKey: Keys.committedIds) ?? [])
         totalCommittedCount = defaults.integer(forKey: Keys.totalCommittedCount)
         totalFreedBytes = (defaults.object(forKey: Keys.totalFreedBytes) as? Int64) ?? 0
         hasCompletedOnboarding = defaults.bool(forKey: Keys.hasCompletedOnboarding)
+        defaults.removeObject(forKey: Keys.legacyCommittedIds)
     }
 
     func markKept(id: String) {
@@ -59,16 +58,13 @@ import Observation
     }
 
     func commitTrashed(ids: [String], freedBytes: Int64) {
-        let idsSet = Set(ids)
-        trashedIds.subtract(idsSet)
-        committedIds.formUnion(idsSet)
+        trashedIds.subtract(Set(ids))
         totalCommittedCount += ids.count
         totalFreedBytes += freedBytes
         persist()
     }
 
     func decision(for id: String) -> PhotoDecision {
-        if committedIds.contains(id) { return .committed }
         if trashedIds.contains(id) { return .trashed }
         if keptIds.contains(id) { return .kept }
         return .pending
@@ -78,7 +74,6 @@ import Observation
         let defaults = UserDefaults.standard
         defaults.setValue(Array(keptIds), forKey: Keys.keptIds)
         defaults.setValue(Array(trashedIds), forKey: Keys.trashedIds)
-        defaults.setValue(Array(committedIds), forKey: Keys.committedIds)
         defaults.setValue(totalCommittedCount, forKey: Keys.totalCommittedCount)
         defaults.setValue(totalFreedBytes, forKey: Keys.totalFreedBytes)
     }
