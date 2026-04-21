@@ -6,6 +6,9 @@ struct VideoPlayerView: View {
     let asset: PHAsset
     @Environment(\.dismiss) private var dismiss
     @State private var player: AVPlayer?
+    @State private var dragOffset: CGFloat = 0
+
+    private let dismissThreshold: CGFloat = 120
 
     var body: some View {
         ZStack {
@@ -18,15 +21,28 @@ struct VideoPlayerView: View {
                 ProgressView().tint(.white)
             }
         }
-        .overlay(alignment: .topTrailing) {
-            Button { dismiss() } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.system(size: 32))
-                    .foregroundStyle(.white, .black.opacity(0.5))
-                    .padding(16)
-            }
-            .buttonStyle(.plain)
-        }
+        .offset(y: max(0, dragOffset))
+        .opacity(1.0 - min(0.4, dragOffset / 600))
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 20)
+                .onChanged { value in
+                    let dy = value.translation.height
+                    let dx = value.translation.width
+                    guard dy > 0, dy > abs(dx) else { return }
+                    dragOffset = dy
+                }
+                .onEnded { value in
+                    let dy = value.translation.height
+                    let dx = value.translation.width
+                    if dy > dismissThreshold, dy > abs(dx) {
+                        dismiss()
+                    } else {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                            dragOffset = 0
+                        }
+                    }
+                }
+        )
         .task { await load() }
         .onDisappear {
             player?.pause()
