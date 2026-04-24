@@ -1,5 +1,6 @@
 import SwiftUI
 import Photos
+import StoreKit
 
 struct TrashView: View {
     @Bindable var vm: TrashViewModel
@@ -179,7 +180,13 @@ private struct CommitSuccessView: View {
     let bytes: Int64
     var onDone: () -> Void
 
+    @Environment(\.requestReview) private var requestReview
+    @Environment(TrashStore.self) private var trash
+    @AppStorage("lastReviewThreshold") private var lastReviewThreshold: Int = 0
+
     @State private var bounceTrigger = 0
+
+    private let reviewThresholds = [50, 300, 500]
 
     var body: some View {
         VStack(spacing: 20) {
@@ -188,7 +195,10 @@ private struct CommitSuccessView: View {
                 .font(.system(size: 80, weight: .bold))
                 .foregroundStyle(.yellow)
                 .symbolEffect(.bounce, value: bounceTrigger)
-                .onAppear { bounceTrigger += 1 }
+                .onAppear {
+                    bounceTrigger += 1
+                    maybeRequestReview()
+                }
             Text("Freed \(FormatHelper.fileSize(bytes))!")
                 .font(.title.weight(.bold))
             Text("Photos stay in iOS Recently Deleted for 30 days. Empty them from the system Photos app to free space immediately.")
@@ -208,6 +218,16 @@ private struct CommitSuccessView: View {
             .buttonStyle(.plain)
             .padding(.horizontal, 24)
             .padding(.bottom, 24)
+        }
+    }
+
+    private func maybeRequestReview() {
+        let count = trash.totalCommittedCount
+        guard let threshold = reviewThresholds.first(where: { $0 > lastReviewThreshold && count >= $0 }) else { return }
+        lastReviewThreshold = threshold
+        Task { @MainActor in
+            try? await Task.sleep(for: .seconds(1.2))
+            requestReview()
         }
     }
 }

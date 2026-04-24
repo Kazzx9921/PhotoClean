@@ -58,6 +58,16 @@ open PhotoClean.xcodeproj
 
 免費 Apple ID(Personal Team)的限制:app 每 7 天過期、同時只能裝 3 個。付費 Apple Developer($99 / 年)則無此限制。
 
+## Fork 後要自己上架
+
+若你想把自己的 build 上架到 App Store(須遵守[授權條款](#授權)),以下三處必須改,否則會跟原作者的 App 與 IAP 衝突:
+
+1. **Bundle identifier** — `project.yml` 裡的 `PRODUCT_BUNDLE_IDENTIFIER: com.geekaz.PhotoClean` 改成你自己的反向 DNS ID,然後執行 `xcodegen generate`。
+2. **內購產品 ID** — `PhotoClean/Features/Paywall/PaywallStore.swift` 的 `productID` 常數,並到 App Store Connect 註冊對應的 Non-Consumable IAP。
+3. **本地 StoreKit 測試設定** — `PhotoClean.storekit` 裡的 `productID` 也要同步改,才能繼續用 Xcode scheme 的本地 sandbox 測試。
+
+簽署已設為 `Automatic`,Xcode 會自動帶入你自己的 Apple Developer Team,無需改 project 檔。
+
 ## 專案架構
 
 ```

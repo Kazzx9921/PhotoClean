@@ -58,6 +58,16 @@ En Xcode:
 
 Si usas un Apple ID gratuito (Personal Team), las apps caducan a los 7 días y solo puedes tener 3 instaladas a la vez. Una cuenta Apple Developer de pago ($99/año) elimina estos límites.
 
+## Fork para tu propio lanzamiento
+
+Si quieres publicar tu propia versión en la App Store (respetando la [licencia](#licencia)), debes cambiar estos tres puntos para no chocar con el original en Xcode ni en App Store Connect:
+
+1. **Bundle identifier** — en `project.yml`, cambia `PRODUCT_BUNDLE_IDENTIFIER: com.geekaz.PhotoClean` por tu propio ID en DNS inverso y ejecuta `xcodegen generate`.
+2. **ID del producto de compra integrada** — en `PhotoClean/Features/Paywall/PaywallStore.swift`, cambia la constante `productID`. Registra en App Store Connect el IAP no consumible correspondiente.
+3. **Configuración local de StoreKit** — actualiza el `productID` dentro de `PhotoClean.storekit` para que el sandbox local del scheme de Xcode siga funcionando.
+
+La firma ya está en `Automatic`, por lo que Xcode toma tu propio Apple Developer Team automáticamente — no hace falta modificar el archivo del proyecto.
+
 ## Arquitectura
 
 ```

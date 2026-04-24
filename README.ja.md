@@ -58,6 +58,16 @@ Xcode で:
 
 無料の Apple ID(Personal Team)を使う場合、アプリは 7 日で失効し、同時にサイドロードできるのは 3 本までです。Apple Developer 有料会員($99/年)では制限が解除されます。
 
+## Fork して自分で公開する場合
+
+自分のビルドを App Store に公開する場合([ライセンス](#ライセンス)に従ってください)、オリジナルと衝突しないよう以下の 3 箇所を変更してください:
+
+1. **Bundle identifier** — `project.yml` の `PRODUCT_BUNDLE_IDENTIFIER: com.geekaz.PhotoClean` を自分のリバース DNS ID に変更し、`xcodegen generate` を実行します。
+2. **アプリ内課金 Product ID** — `PhotoClean/Features/Paywall/PaywallStore.swift` の `productID` 定数を変更し、App Store Connect で対応する Non-Consumable の IAP を登録します。
+3. **ローカル StoreKit テスト設定** — `PhotoClean.storekit` 内の `productID` も同じく変更し、Xcode スキームのローカルサンドボックスで引き続きテストできるようにします。
+
+署名は既に `Automatic` に設定されているので、Apple Developer Team は Xcode が自動で読み込みます。プロジェクトファイルの変更は不要です。
+
 ## プロジェクト構成
 
 ```

@@ -58,6 +58,16 @@ In Xcode:
 
 Using a free Apple ID (Personal Team)? Apps expire after 7 days and you can only sideload 3 at a time. A paid Apple Developer account ($99/year) removes these limits.
 
+## Forking for your own release
+
+If you want to ship your own build to the App Store (subject to the [license](#license)), you must change these so Xcode and App Store Connect don't collide with the original:
+
+1. **Bundle identifier** — in `project.yml`, change `PRODUCT_BUNDLE_IDENTIFIER: com.geekaz.PhotoClean` to your own reverse-DNS ID, then run `xcodegen generate`.
+2. **In-app purchase product ID** — in `PhotoClean/Features/Paywall/PaywallStore.swift`, change the `productID` constant. Register the matching non-consumable IAP in App Store Connect.
+3. **Local StoreKit test config** — update `productID` inside `PhotoClean.storekit` to match, so the Xcode scheme's local sandbox still works.
+
+Signing is already set to `Automatic`, so your own Apple Developer Team is picked up from Xcode — no change needed in the project file.
+
 ## Architecture
 
 ```

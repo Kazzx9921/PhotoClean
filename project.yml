@@ -28,8 +28,8 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.geekaz.PhotoClean
-        MARKETING_VERSION: "1.0.1"
-        CURRENT_PROJECT_VERSION: "2"
+        MARKETING_VERSION: "1.0.2"
+        CURRENT_PROJECT_VERSION: "3"
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_NSPhotoLibraryUsageDescription: "PhotoClean needs access to your library to help you clean up photos. Nothing leaves your device."
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO

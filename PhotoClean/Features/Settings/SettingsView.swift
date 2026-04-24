@@ -11,7 +11,7 @@ struct SettingsView: View {
     @State private var showLanguageRestartAlert = false
 
     private let githubURL = URL(string: "https://github.com/Kazzx9921/PhotoClean")!
-    private let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0.1"
+    private let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0.2"
 
     var body: some View {
         NavigationStack {
